@@ -33,6 +33,7 @@ int buttonCounter4 = 0;
 
 
 int trigger = 0; 
+int triggerHistory = 0;
 // for IR sensor 
 
 int ledTrigger = 0;
@@ -79,7 +80,7 @@ void loop() {
     ledDurationTemp = ledDurationTemp - 1;
     digitalWrite(ledPin,HIGH);
   } else {
-      digitalWrite(ledPin,LOW);     
+      digitalWrite(ledPin,LOW);   
   }
  
   
@@ -164,20 +165,20 @@ void loop() {
 // bounds for variables 
   if(irThreshold < 0){
     irThreshold = 0;
-  } else if (irThreshold > 1023){
-    irThreshold = 1023;
+  } else if (irThreshold > 1020){
+    irThreshold = 1020;
   }
 
   if(ledDuration < 0){
     ledDuration = 0;
-  } else if (ledDuration > 10000){
-    ledDuration = 10000;
+  } else if (ledDuration > 20000){
+    ledDuration = 20000;
   }
 
   if(ledDelay < 0){
     ledDelay = 0;
-  } else if (ledDelay > 10000){
-    ledDelay = 10000;
+  } else if (ledDelay > 20000){
+    ledDelay = 20000;
   }
 
 
@@ -201,10 +202,24 @@ SIGNAL(TIMER0_COMPA_vect) {
   
   irInputVal = analogRead(irPin);  
   
-  if(irInputVal < irThreshold && ledDurationTemp == 0) {      
+  if (irInputVal < irThreshold && triggerHistory == 0){
+    trigger = 1;
+  }
+  
+  
+  if(irInputVal < irThreshold && ledDurationTemp == 0 && trigger == 1) {      
     ledDelayTemp = ledDelay;
     ledDurationTemp = ledDuration;
+    trigger = 0;
   }  
+  
+  if (irInputVal < irThreshold) {
+    triggerHistory = 1;
+  } else {
+    triggerHistory = 0;
+  }
+
+  
 } 
 
 void splashscreen(){
