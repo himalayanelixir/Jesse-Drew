@@ -32,13 +32,13 @@ int buttonCounter3 = 0;
 int buttonCounter4 = 0;
 
 
-int trigger = 0; 
-int triggerHistory = 0;
+volatile int trigger = 0; 
+volatile int triggerHistory = 0;
 // for IR sensor 
 
 int ledTrigger = 0;
-int ledDelayTemp = 0;
-long ledDurationTemp = 0;
+volatile int ledDelayTemp = 0;
+volatile long ledDurationTemp = 0;
 
 // use these to see if we need to update the screen
 // we don't do this all the time because it is an expensive operation 
@@ -205,8 +205,6 @@ SIGNAL(TIMER0_COMPA_vect) {
   if (irInputVal < irThreshold && triggerHistory == 0){
     trigger = 1;
   }
-  
-  
   if(irInputVal < irThreshold && ledDurationTemp == 0 && trigger == 1) {      
     ledDelayTemp = ledDelay;
     ledDurationTemp = ledDuration;
@@ -218,8 +216,6 @@ SIGNAL(TIMER0_COMPA_vect) {
   } else {
     triggerHistory = 0;
   }
-
-  
 } 
 
 void splashscreen(){
