@@ -14,3 +14,11 @@ An animation machine is a box with a viewing window. Within the window you see i
 
 ## <a name='History'></a>History
 This project was originally created by Jesse and Glenda Drew, professors at UC Davis to redesign an analog animation machine with one built on Arduino. The project was originally started in 2015 and a version 1 delivered in early 2016.
+
+## Future
+
+* Going to 3D Print new housing
+
+* New Motor
+
+* New Control Logic
